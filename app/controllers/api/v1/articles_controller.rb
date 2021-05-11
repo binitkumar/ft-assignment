@@ -1,6 +1,6 @@
 class Api::V1::ArticlesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  caches_action :show
+  caches_action :index
 
   def index
     @articles = Article.latest_articles
