@@ -3,7 +3,10 @@ class Article < ApplicationRecord
   after_create :flush_latest_article_cache
 
   def self.latest_articles
-    Rails.cache.fetch('latest_100', expires_in: 0) { limit(100).to_a }
+    Rails.cache.fetch('latest_100', expires_in: 0) { limit(100).collect do | article | 
+        { article_url: article.article_url, video_id: article.video_id, highlight_url: article.highlight_url } 
+      end 
+    }
   end
 
   def flush_latest_article_cache
